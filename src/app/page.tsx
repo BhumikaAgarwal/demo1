@@ -1,13 +1,13 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { ReactNode, useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Bell, ChevronDown, ChevronRight, Home, Settings, Users, Zap, PlusCircle, User, Folder, Search, MoreVertical, Calendar,  ChevronRightIcon, Edit, Database, Mail, MessageSquare, FileText, FileImage, MousePointer, Send, Download, Menu, BarChart2, Lightbulb, HeartPulse, ArrowRight, InfoIcon } from "lucide-react"
+import { Bell, ChevronDown, ChevronRight, Home, Settings, Users, Zap, PlusCircle, User, Folder, Search, MoreVertical, Calendar, ChevronRightIcon, Edit, Database, Mail, MessageSquare, FileText, FileImage, MousePointer, Send, Download, Menu, BarChart2, Lightbulb, HeartPulse, ArrowRight, InfoIcon } from "lucide-react"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,7 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Avatar, AvatarFallback} from "@/components/ui/avatar"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { ErrorBoundary } from 'react-error-boundary'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from 'recharts'
 
@@ -45,14 +45,14 @@ const performanceData = [
 interface VerticalCardProps {
   title: string;
   icon: React.ReactNode; // Adjust type based on what icon is
-  value: number; // Adjust based on your requirements
-  change: number; // Adjust based on your requirements
+  value: string; // Adjust based on your requirements
+  change: string; // Adjust based on your requirements
   color: string; // Assuming color is a string for class names
   onDiveDeeper: () => void; // Assuming this is a function
 }
 const VerticalCard: React.FC<VerticalCardProps> = ({ title, icon, value, change, color, onDiveDeeper }) => (
 
-<Card className={`bg-gradient-to-br ${color} border-none transition-all duration-300 hover:shadow-xl`}>
+  <Card className={`bg-gradient-to-br ${color} border-none transition-all duration-300 hover:shadow-xl`}>
     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-0">
       <CardTitle className="text-gray-800 text-lg font-medium">{title}</CardTitle>
       {icon}
@@ -61,11 +61,11 @@ const VerticalCard: React.FC<VerticalCardProps> = ({ title, icon, value, change,
       <div className="text-xl font-bold text-gray-800">{value}</div>
       <div className="flex justify-between items-center text-sm">
         <span className="text-gray-700 mt-2">{change}</span>
-        <Button 
-          variant="ghost" 
-          size="sm" 
+        <Button
+          variant="ghost"
+          size="sm"
           className="text-xs text-gray-800 hover:text-gray-700"
-          onClick={() => onDiveDeeper(title)}
+          onClick={() => onDiveDeeper()}
         >
           Dive Deeper
         </Button>
@@ -120,9 +120,15 @@ export default function Component() {
     // Placeholder for dive deeper functionality
     console.log(`Diving deeper into: ${topic}`)
   }
-  interface SidebarItem {
+
+  interface Subitem {
     name: string;
-    subitems?: SidebarItem[]; // optional if subitems can exist
+    special?: boolean;
+  }
+  interface SidebarItem {
+    icon: ReactNode;
+    name: string;
+    subitems?: (string | Subitem)[];
   }
 
   const renderSidebarItem = (item: SidebarItem, index: number) => (
@@ -145,36 +151,39 @@ export default function Component() {
           {!isSidebarCollapsed && <span className="ml-2 text-base">{item.name}</span>}
         </div>
         {!isSidebarCollapsed && item.subitems && (
-          expandedSections.has(item.name) ? 
-            <ChevronDown className="ml-auto h-5 w-5" /> : 
+          expandedSections.has(item.name) ?
+            <ChevronDown className="ml-auto h-5 w-5" /> :
             <ChevronRight className="ml-auto h-5 w-5" />
         )}
       </Button>
       {!isSidebarCollapsed && item.subitems && expandedSections.has(item.name) && (
         <div className="ml-6 space-y-1">
-          {item.subitems.map((subitem: string | { name: string, special: boolean }) => (
-            <Button 
-              key={typeof subitem === 'string' ? subitem : subitem.name}
-              variant="ghost" 
-              className={`w-full justify-start text-left text-sm py-1 px-2 h-auto hover:bg-gray-800 hover:text-white ${typeof subitem !== 'string' && subitem.special ? 'text-blue-400 hover:text-blue-300' : 'text-gray-400'}`}
-              onClick={() => {
-                if (typeof subitem === 'string') {
-                  if (subitem === 'Weekly Messaging Effectiveness Automation') {
-                    setCurrentScreen('weeklyMessagingEffectivenessDigest');
-                  } else if (subitem === 'Email Message Resonance Report') {
-                    setCurrentScreen('emailMessageResonanceReport');
-                  }
-                }
-              }}
-            >
-              <div className="flex items-center w-full">
-                {typeof subitem !== 'string' && subitem.special && <PlusCircle className="mr-2 h-4 w-4 flex-shrink-0" />}
-                <span className="flex-grow whitespace-normal">
-                  {typeof subitem === 'string' ? subitem : subitem.name}
-                </span>
-              </div>
-            </Button>
-          ))}
+         {item.subitems?.map((subitem: string | { name: string; special?: boolean }) => (
+  <Button
+    key={typeof subitem === 'string' ? subitem : subitem.name}
+    variant="ghost"
+    className={`w-full justify-start text-left text-sm py-1 px-2 h-auto hover:bg-gray-800 hover:text-white ${
+      typeof subitem !== 'string' && subitem.special ? 'text-blue-400 hover:text-blue-300' : 'text-gray-400'
+    }`}
+    onClick={() => {
+      if (typeof subitem === 'string') {
+        if (subitem === 'Weekly Messaging Effectiveness Automation') {
+          setCurrentScreen('weeklyMessagingEffectivenessDigest');
+        } else if (subitem === 'Email Message Resonance Report') {
+          setCurrentScreen('emailMessageResonanceReport');
+        }
+      }
+    }}
+  >
+    <div className="flex items-center w-full">
+      {typeof subitem !== 'string' && subitem.special && <PlusCircle className="mr-2 h-4 w-4 flex-shrink-0" />}
+      <span className="flex-grow whitespace-normal">
+        {typeof subitem === 'string' ? subitem : subitem.name}
+      </span>
+    </div>
+  </Button>
+))}
+
         </div>
       )}
       {index === 2 && <hr className="border-gray-700 my-2" />}
@@ -187,8 +196,8 @@ export default function Component() {
         <header className="flex justify-between items-center">
           <div className="flex items-center space-x-4">
             <h1 className="text-2xl font-bold text-gray-800">Dashboard</h1>
-            
-            
+
+
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="bg-white text-gray-700 border-gray-300 hover:bg-gray-100 hover:text-gray-900 text-sm font-medium">
@@ -228,7 +237,7 @@ export default function Component() {
             value="65% increase in Email engagement"
             change="Primary Value Prop: Zero-Trust Compliance"
             color="from-blue-100 to-blue-200"
-            onDiveDeeper={handleDiveDeeper}
+            onDiveDeeper={() => handleDiveDeeper("Financial Services")}
           />
           <VerticalCard
             title="Healthcare"
@@ -236,7 +245,7 @@ export default function Component() {
             value="Reduction in sales cycle"
             change="1.8x faster deal velocity post-HIPAA messaging pivot"
             color="from-green-100 to-green-200"
-            onDiveDeeper={handleDiveDeeper}
+            onDiveDeeper={() => handleDiveDeeper("Healthcare")}
           />
           <VerticalCard
             title="Government"
@@ -244,8 +253,9 @@ export default function Component() {
             value="22% Competitive Win Rate"
             change="New Cloudflare Triad campaign winning 5-1 in H2H"
             color="from-purple-100 to-purple-200"
-            onDiveDeeper={handleDiveDeeper}
+            onDiveDeeper={() => handleDiveDeeper("Government")}
           />
+
         </div>
 
         <Card className="bg-white border-gray-200 shadow-sm mb-6">
@@ -271,7 +281,7 @@ export default function Component() {
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-              
+
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" size="sm" className="bg-white text-gray-700 border-gray-300 hover:bg-gray-100 hover:text-gray-900">
@@ -309,13 +319,13 @@ export default function Component() {
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={performanceData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-                  <XAxis 
-                    dataKey="week" 
+                  <XAxis
+                    dataKey="week"
                     stroke="#6B7280"
                     tick={{ fill: '#6B7280', fontSize: 12 }}
                     tickLine={{ stroke: '#9CA3AF' }}
                   />
-                  <YAxis 
+                  <YAxis
                     stroke="#6B7280"
                     tick={{ fill: '#6B7280', fontSize: 12 }}
                     tickLine={{ stroke: '#9CA3AF' }}
@@ -327,8 +337,8 @@ export default function Component() {
                     labelStyle={{ color: '#111827', fontWeight: 'bold' }}
                     itemStyle={{ color: '#374151' }}
                   />
-                  <Legend 
-                    verticalAlign="top" 
+                  <Legend
+                    verticalAlign="top"
                     height={36}
                     iconType="circle"
                     wrapperStyle={{ paddingBottom: '10px' }}
@@ -548,7 +558,7 @@ export default function Component() {
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-gray-300">Report Recipients</label>
-                    <Textarea 
+                    <Textarea
                       placeholder="Enter email addresses, separated by commas"
                       className="bg-gray-800 border-gray-700 text-white"
                     />
@@ -670,10 +680,10 @@ export default function Component() {
                     <h2 className="text-xl font-semibold mb-2">Overview</h2>
                     <p>This report provides a comprehensive analysis of CloudSecures messaging effectiveness across the entire customer lifecycle, including marketing campaigns, sales conversations, and customer success interactions. We examine how our key messages resonate with different segments (Financial Services, Healthcare, Government, Retail) through various touchpoints. This holistic view will help Alexs team optimize messaging strategies for maximum impact at every stage of the customer journey.</p>
                   </section>
-                  
+
                   <section>
                     <h2 className="text-xl font-semibold mb-2">1. Segment & Channel Performance Overview</h2>
-                    
+
                     <h3 className="text-lg font-semibold mt-4 mb-2">Financial Services Segment</h3>
                     <ul className="list-disc pl-5 space-y-1">
                       <li><strong>Top-Performing Message Theme:</strong> Compliance Automation</li>
@@ -681,7 +691,7 @@ export default function Component() {
                         <ul className="list-disc pl-5 space-y-1">
                           <li><strong>LinkedIn:</strong> 85% engagement rate; Compliance Automation posts saw a 15% higher share rate compared to other messages</li>
                           <li><strong>Email Campaigns:</strong> 78% open rate, with a strong preference for compliance-related content; high conversion with compliance updates subject lines</li>
-                                                    <li><strong>Google Ads:</strong> 65% CTR for secure & compliant ad copy, suggesting a high interest in regulatory compliance</li>
+                          <li><strong>Google Ads:</strong> 65% CTR for secure & compliant ad copy, suggesting a high interest in regulatory compliance</li>
                         </ul>
                       </li>
                       <li><strong>Sales Conversation Insights:</strong>
@@ -699,10 +709,10 @@ export default function Component() {
                       <li><strong>Recommendation:</strong> Align marketing, sales, and customer success messaging around real-time compliance updates and quantifiable cost savings. Develop more case studies highlighting compliance automation success stories for use across all customer touchpoints.</li>
                     </ul>
                   </section>
-                  
+
                   <section>
                     <h2 className="text-xl font-semibold mb-2">2. Visualization: Message Effectiveness Across Customer Lifecycle</h2>
-                    
+
                     <h3 className="text-lg font-semibold mt-4 mb-2">Chart 1: Message Resonance Across Customer Lifecycle Stages</h3>
                     <div className="w-full h-80">
                       <ResponsiveContainer width="100%" height="100%">
@@ -729,10 +739,10 @@ export default function Component() {
                     <p className="text-sm text-center text-gray-500 mt-2">Message Resonance Across Customer Lifecycle Stages</p>
                     <p className="mt-4"><strong>Key Insight:</strong> This chart reveals that our messaging maintains strong consistency across the customer lifecycle, with particularly high resonance in customer success for all segments. Financial Services shows the most balanced performance across all stages.</p>
                   </section>
-                  
+
                   <section>
                     <h2 className="text-xl font-semibold mb-2">3. Message Modification Recommendations</h2>
-                    
+
                     <h3 className="text-lg font-semibold mt-4 mb-2">Cross-Lifecycle Alignment:</h3>
                     <ul className="list-disc pl-5 space-y-1">
                       <li><strong>Modification:</strong> Develop a consistent narrative around each key theme that evolves through the customer lifecycle</li>
@@ -922,6 +932,7 @@ export default function Component() {
               { name: 'Settings', icon: <Settings className="h-5 w-5" /> }
             ].map((item, index) => renderSidebarItem(item, index))}
           </nav>
+
         </aside>
 
         {/* Main content */}
