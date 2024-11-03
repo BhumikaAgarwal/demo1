@@ -42,9 +42,17 @@ const performanceData = [
   { week: 'Week 5', 'Financial Services': 58, 'Healthcare': 33, 'Government': 42 },
   { week: 'Week 6', 'Financial Services': 62, 'Healthcare': 36, 'Government': 39 },
 ]
+interface VerticalCardProps {
+  title: string;
+  icon: React.ReactNode; // Adjust type based on what icon is
+  value: number; // Adjust based on your requirements
+  change: number; // Adjust based on your requirements
+  color: string; // Assuming color is a string for class names
+  onDiveDeeper: () => void; // Assuming this is a function
+}
+const VerticalCard: React.FC<VerticalCardProps> = ({ title, icon, value, change, color, onDiveDeeper }) => (
 
-const VerticalCard = ({ title, icon, value, change, color, onDiveDeeper }) => (
-  <Card className={`bg-gradient-to-br ${color} border-none transition-all duration-300 hover:shadow-xl`}>
+<Card className={`bg-gradient-to-br ${color} border-none transition-all duration-300 hover:shadow-xl`}>
     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-0">
       <CardTitle className="text-gray-800 text-lg font-medium">{title}</CardTitle>
       {icon}
