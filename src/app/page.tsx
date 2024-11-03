@@ -26,12 +26,13 @@ import { ErrorBoundary } from 'react-error-boundary'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from 'recharts'
 
 
-const ErrorFallback = ({ error }) => (
+const ErrorFallback = ({ error }: { error: { message: string } }) => (
   <div role="alert" className="p-4 bg-red-100 text-red-900 rounded-md">
     <h2 className="text-lg font-semibold">Oops! Something went wrong.</h2>
     <p>Error: {error.message}</p>
   </div>
-)
+);
+
 
 const performanceData = [
   { week: 'Week 1', 'Financial Services': 45, 'Healthcare': 30, 'Government': 35 },
