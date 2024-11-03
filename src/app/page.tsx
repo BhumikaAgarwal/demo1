@@ -5,10 +5,9 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { MyChart } from "@/components/ui/MyChart"
 import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Bell, ChevronDown, ChevronRight, Home, Settings, Users, Zap, PlusCircle, User, Folder, Search, MoreVertical, Calendar, ChevronLeft, ChevronRightIcon, Edit, Database, Mail, MessageSquare, FileText, FileImage, MousePointer, Send, Download, Menu, BarChart2, Lightbulb, HeartPulse, ArrowRight, InfoIcon } from "lucide-react"
+import { Bell, ChevronDown, ChevronRight, Home, Settings, Users, Zap, PlusCircle, User, Folder, Search, MoreVertical, Calendar,  ChevronRightIcon, Edit, Database, Mail, MessageSquare, FileText, FileImage, MousePointer, Send, Download, Menu, BarChart2, Lightbulb, HeartPulse, ArrowRight, InfoIcon } from "lucide-react"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,7 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback} from "@/components/ui/avatar"
 import { ErrorBoundary } from 'react-error-boundary'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from 'recharts'
 
@@ -112,8 +111,12 @@ export default function Component() {
     // Placeholder for dive deeper functionality
     console.log(`Diving deeper into: ${topic}`)
   }
+  interface SidebarItem {
+    name: string;
+    subitems?: SidebarItem[]; // optional if subitems can exist
+  }
 
-  const renderSidebarItem = (item: any, index: number) => (
+  const renderSidebarItem = (item: SidebarItem, index: number) => (
     <div key={item.name} className="space-y-1">
       <Button
         variant="ghost"
@@ -656,7 +659,7 @@ export default function Component() {
                 <div className="space-y-6">
                   <section>
                     <h2 className="text-xl font-semibold mb-2">Overview</h2>
-                    <p>This report provides a comprehensive analysis of CloudSecure's messaging effectiveness across the entire customer lifecycle, including marketing campaigns, sales conversations, and customer success interactions. We examine how our key messages resonate with different segments (Financial Services, Healthcare, Government, Retail) through various touchpoints. This holistic view will help Alex's team optimize messaging strategies for maximum impact at every stage of the customer journey.</p>
+                    <p>This report provides a comprehensive analysis of CloudSecures messaging effectiveness across the entire customer lifecycle, including marketing campaigns, sales conversations, and customer success interactions. We examine how our key messages resonate with different segments (Financial Services, Healthcare, Government, Retail) through various touchpoints. This holistic view will help Alexs team optimize messaging strategies for maximum impact at every stage of the customer journey.</p>
                   </section>
                   
                   <section>
@@ -668,8 +671,8 @@ export default function Component() {
                       <li><strong>Marketing Engagement Insights:</strong>
                         <ul className="list-disc pl-5 space-y-1">
                           <li><strong>LinkedIn:</strong> 85% engagement rate; Compliance Automation posts saw a 15% higher share rate compared to other messages</li>
-                          <li><strong>Email Campaigns:</strong> 78% open rate, with a strong preference for compliance-related content; high conversion with "compliance updates" subject lines</li>
-                                                    <li><strong>Google Ads:</strong> 65% CTR for "secure & compliant" ad copy, suggesting a high interest in regulatory compliance</li>
+                          <li><strong>Email Campaigns:</strong> 78% open rate, with a strong preference for compliance-related content; high conversion with compliance updates subject lines</li>
+                                                    <li><strong>Google Ads:</strong> 65% CTR for secure & compliant ad copy, suggesting a high interest in regulatory compliance</li>
                         </ul>
                       </li>
                       <li><strong>Sales Conversation Insights:</strong>
@@ -684,7 +687,7 @@ export default function Component() {
                           <li>Feature requests often centered around expanding compliance automation capabilities</li>
                         </ul>
                       </li>
-                      <li><strong>Recommendation:</strong> Align marketing, sales, and customer success messaging around "real-time compliance updates" and quantifiable cost savings. Develop more case studies highlighting compliance automation success stories for use across all customer touchpoints.</li>
+                      <li><strong>Recommendation:</strong> Align marketing, sales, and customer success messaging around real-time compliance updates and quantifiable cost savings. Develop more case studies highlighting compliance automation success stories for use across all customer touchpoints.</li>
                     </ul>
                   </section>
                   
