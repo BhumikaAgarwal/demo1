@@ -5,6 +5,26 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Light Mode */
+.light-mode {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+/* Dark Mode */
+.dark-mode {
+  background-color: #333;
+  color: #f5f5f5;
+}
+
+/* Toggle Button Styles */
+.toggle-button {
+  padding: 10px;
+  cursor: pointer;
+}
+
+
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
