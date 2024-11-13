@@ -1,7 +1,6 @@
 'use client'
 
 import React, { ReactNode, useState } from 'react'
-import dynamic from 'next/dynamic'
 import { ThemeProvider } from "@/components/ui/theme-provider" // Adjust based on your theme-provider file location
 import ThemeToggle from "@/components/ui/ThemeToggle"
 import { Button } from "@/components/ui/button"
@@ -28,13 +27,6 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { ErrorBoundary } from 'react-error-boundary'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from 'recharts'
 
-// Dynamically import ThemeProvider to disable SSR
-const NextThemesProvider = dynamic(
-	() => import('next-themes').then((e) => e.ThemeProvider),
-	{
-		ssr: false, // Ensures ThemeProvider is only used on the client-side
-	}
-)
 
 const ErrorFallback = ({ error }: { error: { message: string } }) => (
   <div role="alert" className="p-4 bg-red-100 text-red-900 rounded-md">
@@ -812,7 +804,7 @@ const ErrorFallback = ({ error }: { error: { message: string } }) => (
                   <div className="space-y-6">
                     <section>
                       <h2 className="text-xl font-semibold mb-2">Overview</h2>
-                      <p>This report provides a comprehensive analysis of CloudSecure's messaging effectiveness across the entire customer lifecycle...</p>
+                      <p>This report provides a comprehensive analysis of CloudSecures messaging effectiveness across the entire customer lifecycle...</p>
                     </section>
 
                     <section>
@@ -1020,7 +1012,7 @@ const ErrorFallback = ({ error }: { error: { message: string } }) => (
     )
 
     return (
-      <ThemeProvider attribute="class"  enableSystem={false}>
+      <ThemeProvider attribute="class" >
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           <div className="flex h-screen bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-sans">
 
