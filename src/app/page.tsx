@@ -1,9 +1,9 @@
 'use client'
 
-import React, { ReactNode, useState, useEffect } from 'react'
-import { useTheme } from "next-themes";
-import { ThemeProvider } from "next-themes"
-import { Moon, Sun } from "lucide-react";
+import React, { ReactNode, useState } from 'react'
+import dynamic from 'next/dynamic'
+import { ThemeProvider } from "@/components/ui/theme-provider" // Adjust based on your theme-provider file location
+import ThemeToggle from "@/components/ui/ThemeToggle"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -28,6 +28,13 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { ErrorBoundary } from 'react-error-boundary'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from 'recharts'
 
+// Dynamically import ThemeProvider to disable SSR
+const NextThemesProvider = dynamic(
+	() => import('next-themes').then((e) => e.ThemeProvider),
+	{
+		ssr: false, // Ensures ThemeProvider is only used on the client-side
+	}
+)
 
 const ErrorFallback = ({ error }: { error: { message: string } }) => (
   <div role="alert" className="p-4 bg-red-100 text-red-900 rounded-md">
@@ -77,22 +84,22 @@ const ErrorFallback = ({ error }: { error: { message: string } }) => (
     </Card>
   )
 
-  function ThemeToggle() {
-    const { theme, setTheme } = useTheme();
+  // function ThemeToggle() {
+  //   const { theme, setTheme } = useTheme();
 
-    return (
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-        className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800"
-      >
-        <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-        <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-        <span className="sr-only">Toggle theme</span>
-      </Button>
-    );
-  }
+  //   return (
+  //     <Button
+  //       variant="ghost"
+  //       size="icon"
+  //       onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+  //       className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800"
+  //     >
+  //       <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+  //       <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+  //       <span className="sr-only">Toggle theme</span>
+  //     </Button>
+  //   );
+  // }
 
   export default function Component() {
     const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(['Actions']))
@@ -317,7 +324,7 @@ const ErrorFallback = ({ error }: { error: { message: string } }) => (
           </div>
 
 
-          <Card className="bg-white border-gray-200 shadow-sm mb-6">
+          <Card className="bg-white border-gray-800 shadow-sm mb-6">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 dark:bg-gray-800 dark:text-gray-200">
               <CardTitle className="text-gray-800 dark:text-gray-200 text-xl font-semibold">Messaging Effectiveness Trends</CardTitle>
               <div className="flex items-center space-x-2">
@@ -599,7 +606,7 @@ const ErrorFallback = ({ error }: { error: { message: string } }) => (
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
-                      <div className="border border-gray-200 rounded-lg p-4 h-96 overflow-y-auto dark:border-gray-600">
+                      <div className="border border-gray-800 rounded-lg p-4 h-96 overflow-y-auto dark:border-gray-600">
                         {chatMessages.map((message, index) => (
                           <div
                             key={index}
@@ -1013,7 +1020,7 @@ const ErrorFallback = ({ error }: { error: { message: string } }) => (
     )
 
     return (
-      <ThemeProvider attribute="class" enableSystem={true} defaultTheme="system">
+      <ThemeProvider attribute="class"  enableSystem={false}>
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           <div className="flex h-screen bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-sans">
 
