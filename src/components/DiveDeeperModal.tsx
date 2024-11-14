@@ -29,7 +29,7 @@ const DiveDeeperModal: React.FC<DiveDeeperModalProps> = ({ isOpen, onClose, cont
           <FaTimes className="h-5 w-5" />
         </Button>
 
-        <h3 className="font-semibold text-lg text-gray-900 dark:text-white mb-4">Dive Deeper Details</h3>
+        <h3 className="font-semibold text-lg text-gray-900 dark:text-white mb-4">AI Assistant</h3>
         <ul className="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300">
           {content.map((item, index) => (
             <li key={index}>{item}</li>
