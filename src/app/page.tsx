@@ -48,37 +48,6 @@ const performanceData = [
   { week: 'Week 5', 'Financial Services': 58, 'Healthcare': 33, 'Government': 42 },
   { week: 'Week 6', 'Financial Services': 62, 'Healthcare': 36, 'Government': 39 },
 ]
-// interface VerticalCardProps {
-//   title: string;
-//   icon: React.ReactNode; // Adjust type based on what icon is
-//   value: string; // Adjust based on your requirements
-//   change: string; // Adjust based on your requirements
-//   color: string; // Assuming color is a string for class names
-//   onDiveDeeper: () => void; // Assuming this is a function
-// }
-// const VerticalCard: React.FC<VerticalCardProps> = ({ title, icon, value, change, color, onDiveDeeper }) => (
-
-//   <Card className={`bg-gradient-to-br ${color} border-none transition-all duration-300 hover:shadow-xl`}>
-//     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-0">
-//       <CardTitle className="text-gray-800 text-lg font-medium">{title}</CardTitle>
-//       {icon}
-//     </CardHeader>
-//     <CardContent className="pt-2">
-//       <div className="text-xl font-bold text-gray-800">{value}</div>
-//       <div className="flex justify-between items-center text-sm">
-//         <span className="text-gray-700 mt-2">{change}</span>
-//         <Button
-//           variant="ghost"
-//           size="sm"
-//           className="text-xs text-gray-800 hover:text-gray-700"
-//           onClick={() => onDiveDeeper()}
-//         >
-//           Dive Deeper
-//         </Button>
-//       </div>
-//     </CardContent>
-//   </Card>
-// )
 
 export default function Component() {
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(['Actions']))
@@ -141,7 +110,7 @@ export default function Component() {
     <div key={item.name} className="space-y-1">
       <Button
         variant="ghost"
-        className={`w-full justify-start text-left hover:bg-gray-200 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-200 ${expandedSections.has(item.name) ? 'bg-gray-800 text-white dark:bg-gray-700 dark:text-gray-200' : 'text-gray-400 dark:text-gray-400'}`}
+        className={`w-full justify-start text-left hover:bg-gray-200 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-200 ${expandedSections.has(item.name) ? 'bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200' : 'text-gray-400 dark:text-gray-400'}`}
         onClick={() => {
           if (item.name === 'Dashboard') {
             setCurrentScreen('dashboard');
@@ -340,7 +309,7 @@ export default function Component() {
         </div>
 
 
-        <Card className="dark:bg-gray-800 bg-white border-gray-200 shadow-sm mb-6 ">
+        <Card className=" dark:bg-gray-800 bg-white border-gray-200vdark:border-gray-700 shadow-sm mb-6 ">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 dark:bg-gray-800 dark:text-gray-200">
             <CardTitle className="text-gray-800 dark:text-gray-200 text-xl font-semibold">Messaging Effectiveness Trends</CardTitle>
             <div className="flex items-center space-x-2">
@@ -486,11 +455,11 @@ export default function Component() {
               <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Weekly Messaging Effectiveness Automation</h1>
             </div>
             <div className="flex items-center space-x-4">
-              <Input className="bg-white-800 border-gray-200 dark:bg-gray-700 border-gray-700 text-base w-72" placeholder="Search..." />
-              <Button variant="ghost" size="icon" className="text-gray-400 dark:text-gray-500 hover:text-gray-100 dark:hover:text-gray-200 hover:bg-gray-800">
+              <Input className="bg-white-800 dark:bg-gray-700 text-base w-72" placeholder="Search..." />
+              <Button variant="ghost" size="icon" className="text-gray-400 dark:text-gray-500 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-200">
                 <Bell className="h-6 w-6" />
               </Button>
-              <Button variant="ghost" size="icon" className="text-gray-400 dark:text-gray-500 hover:text-gray-100 dark:hover:text-gray-200 hover:bg-gray-800">
+              <Button variant="ghost" size="icon" className="text-gray-400 dark:text-gray-500 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-200">
                 <User className="h-6 w-6" />
               </Button>
             </div>
